@@ -1,0 +1,103 @@
+.link-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+
+  /* Frosted glass effect */
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(8px);          /* blur background behind the card */
+  -webkit-backdrop-filter: blur(8px);  /* for Safari */
+  border-radius: 0.5rem;
+
+  transition: background 0.3s;
+}
+
+/* Shine effect using pseudo-element */
+.link-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.3) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1; /* make sure shine is above background but below content */
+}
+
+/* Animate the shine on hover */
+.link-card:hover::before {
+  opacity: 1;
+  animation: shine 0.8s ease-in-out forwards;
+}
+
+/* Ensure content stays above the shine */
+.link-card * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Keyframes for smooth left-to-right shine */
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+.link-card:hover {
+  background: rgba(255, 255, 255, 0.2); /* slightly more opaque on hover */
+}
+.link-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.25rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+.link-card .content {
+    display: flex;
+    flex-direction: column;
+}
+.link-card .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+.link-card .description {
+    font-size: 0.875rem;
+    color: #ddd;                    
+    line-height: 1.2;
+}
+.link-card .url {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-top: 0.25rem;
+    word-break: break-all;
+}
+@media (max-width: 600px) {
+  .link-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .link-card img {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+.link-card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
